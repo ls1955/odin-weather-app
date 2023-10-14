@@ -10,4 +10,16 @@ function getWeatherData(location) {
     .catch(console.log);
 }
 
-getWeatherData("london");
+async function processedWeatherData(location) {
+    let response = await getWeatherData(location);
+    let data = await response.json();
+
+    return {
+        location: data.location.name,
+        condition: data.current.condition.text,
+        temperature_in_celcius: data.current.temp_c,
+        temperature_in_fahrenheit: data.current.temp_f
+    }
+}
+
+console.log(processedWeatherData("london"))
