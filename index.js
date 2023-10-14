@@ -7,7 +7,6 @@ function getWeatherData(location) {
 
       return response;
     })
-    .catch(console.log);
 }
 
 async function processedWeatherData(location) {
@@ -22,4 +21,18 @@ async function processedWeatherData(location) {
     }
 }
 
-console.log(processedWeatherData("london"))
+const input = document.querySelector("input")
+const confirmButton = document.querySelector("button")
+const errMessageBox = document.querySelector(".error-message-box")
+
+confirmButton.addEventListener("click", e => {
+    e.preventDefault()
+
+    const location = input.value
+
+    processedWeatherData(location)
+    .then(console.log)
+    .catch(console.log)
+})
+
+// TODO: Populate information and display error message
