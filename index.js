@@ -45,5 +45,12 @@ confirmButton.addEventListener("click", (e) => {
 
   processedWeatherData(location)
     .then(data => populateFields(data))
-    .catch(err => errMessageBox.textContent = err);
+    .catch(err => {
+        errMessageBox.textContent = err;
+
+        locationField.textContent = "";
+        conditionField.textContent = "";
+        tempCField.textContent = "";
+        tempFField.textContent = "";
+    });
 });

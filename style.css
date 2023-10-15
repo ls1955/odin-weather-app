@@ -15,6 +15,13 @@ form {
     padding: 15px;
 }
 
+.error-message-box {
+    background: rgb(240, 0, 0);
+    color: rgb(0, 0, 0);
+    font-size: 1.2rem;
+    margin: 15px;
+}
+
 main {
     flex: 1.5;
     font-size: 1.75rem;
