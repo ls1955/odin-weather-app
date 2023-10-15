@@ -6,33 +6,44 @@ function getWeatherData(location) {
       if (!response.ok) throw new Error("Failed to fetch weather data.");
 
       return response;
-    })
+  });
 }
 
 async function processedWeatherData(location) {
-    let response = await getWeatherData(location);
-    let data = await response.json();
+  let response = await getWeatherData(location);
+  let data = await response.json();
 
-    return {
-        location: data.location.name,
-        condition: data.current.condition.text,
-        temperature_in_celcius: data.current.temp_c,
-        temperature_in_fahrenheit: data.current.temp_f
-    }
+  return {
+    location: data.location.name,
+    condition: data.current.condition.text,
+    temperature_in_celcius: data.current.temp_c,
+    temperature_in_fahrenheit: data.current.temp_f,
+  };
 }
 
-const input = document.querySelector("input")
-const confirmButton = document.querySelector("button")
-const errMessageBox = document.querySelector(".error-message-box")
+const locationField = document.querySelector(".location-field");
+const conditionField = document.querySelector(".condition-field");
+const tempCField = document.querySelector(".temperature-celcius-field");
+const tempFField = document.querySelector(".temperature-fahrenheit-field");
 
-confirmButton.addEventListener("click", e => {
-    e.preventDefault()
+function populateFields(data) {
+  locationField.textContent = `Location: ${data.location}`;
+  conditionField.textContent = `Condition: ${data.condition}`;
+  tempCField.textContent = `Temperature(celcius): ${data.temperature_in_celcius}°C`;
+  tempFField.textContent = `Temperature(fahrenheit): ${data.temperature_in_fahrenheit}°F`;
+}
 
-    const location = input.value
+const input = document.querySelector("input");
+const confirmButton = document.querySelector("button");
+const errMessageBox = document.querySelector(".error-message-box");
 
-    processedWeatherData(location)
-    .then(console.log)
-    .catch(console.log)
-})
+confirmButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  errMessageBox.textContent = "";
 
-// TODO: Populate information and display error message
+  const location = input.value;
+
+  processedWeatherData(location)
+    .then(data => populateFields(data))
+    .catch(err => errMessageBox.textContent = err);
+});
