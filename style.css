@@ -27,3 +27,18 @@ main {
     font-size: 1.75rem;
     margin: 20px;
 }
+
+.loader {
+    display: none;
+    border: 8px solid rgb(240, 240, 240);
+    border-top: 8px solid rgb(0, 0, 225);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: 1s spin linear infinite
+}
+
+@keyframes spin {
+    0% { tranform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

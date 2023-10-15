@@ -36,21 +36,26 @@ function populateFields(data) {
 const input = document.querySelector("input");
 const confirmButton = document.querySelector("button");
 const errMessageBox = document.querySelector(".error-message-box");
+const loader = document.querySelector(".loader");
 
 confirmButton.addEventListener("click", (e) => {
   e.preventDefault();
   errMessageBox.textContent = "";
+  locationField.textContent = "";
+  conditionField.textContent = "";
+  tempCField.textContent = "";
+  tempFField.textContent = "";
+  loader.style.display = "block";
 
   const location = input.value;
 
   processedWeatherData(location)
-    .then(data => populateFields(data))
+    .then(data => {
+        loader.style.display = "none";
+        populateFields(data);
+    })
     .catch(err => {
+        loader.style.display = "none";
         errMessageBox.textContent = err;
-
-        locationField.textContent = "";
-        conditionField.textContent = "";
-        tempCField.textContent = "";
-        tempFField.textContent = "";
     });
 });
