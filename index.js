@@ -9,10 +9,7 @@ function getWeatherData(location) {
   });
 }
 
-async function processedWeatherData(location) {
-  let response = await getWeatherData(location);
-  let data = await response.json();
-
+function processedWeatherData(data) {
   return {
     location: data.location.name,
     condition: data.current.condition.text,
@@ -38,7 +35,7 @@ const confirmButton = document.querySelector("button");
 const errMessageBox = document.querySelector(".error-message-box");
 const loader = document.querySelector(".loader");
 
-confirmButton.addEventListener("click", (e) => {
+confirmButton.addEventListener("click", async (e) => {
   e.preventDefault();
   errMessageBox.textContent = "";
   locationField.textContent = "";
@@ -47,15 +44,15 @@ confirmButton.addEventListener("click", (e) => {
   tempFField.textContent = "";
   loader.style.display = "block";
 
-  const location = input.value;
+  try {
+    const location = input.value;
+    const response = await getWeatherData(location);
+    const data = await response.json();
 
-  processedWeatherData(location)
-    .then(data => {
-        loader.style.display = "none";
-        populateFields(data);
-    })
-    .catch(err => {
-        loader.style.display = "none";
-        errMessageBox.textContent = err;
-    });
+    populateFields(processedWeatherData(data));
+  } catch (err) {
+    errMessageBox.textContent = err;
+  } finally {
+    loader.style.display = "none";
+  }
 });
