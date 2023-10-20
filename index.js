@@ -13,24 +13,29 @@ function processedWeatherData(data) {
   return {
     location: data.location.name,
     condition: data.current.condition.text,
-    temperature_in_celcius: data.current.temp_c,
-    temperature_in_fahrenheit: data.current.temp_f,
+    temperature_c: data.current.temp_c,
+    temperature_f: data.current.temp_f,
+    icon: data.current.condition.icon
   };
 }
 
 const locationField = document.querySelector(".location-field");
 const conditionField = document.querySelector(".condition-field");
 const temperatureField = document.querySelector(".temperature-field");
+const iconField = document.querySelector(".icon-field");
 const celciusRadioBtn = document.querySelector("[value=celsius]");
 
 function populateFields(data) {
-  locationField.textContent = `Location: ${data.location}`;
-  conditionField.textContent = `Condition: ${data.condition}`;
+  iconField.style.display = "block";
+
+  locationField.textContent = data.location;
+  conditionField.textContent = data.condition;
+  iconField.src = data.icon;
 
   if (celciusRadioBtn.checked) {
-      temperatureField.textContent = `Temperature(celcius): ${data.temperature_in_celcius}°C`;
+      temperatureField.textContent = `${data.temperature_c}°C`;
   } else {
-      temperatureField.textContent = `Temperature(fahrenheit): ${data.temperature_in_fahrenheit}°F`;
+      temperatureField.textContent = `${data.temperature_f}°F`;
   }
 }
 
@@ -46,6 +51,7 @@ confirmButton.addEventListener("click", async (e) => {
   conditionField.textContent = "";
   temperatureField.textContent = "";
   loader.style.display = "block";
+  iconField.style.display = "none";
 
   try {
     const location = input.value;
