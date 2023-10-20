@@ -23,9 +23,17 @@ form {
 }
 
 main {
+    display: flex;
+    flex-direction: column;
+
     flex: 1.5;
-    font-size: 1.75rem;
+    font-size: 1.4rem;
     margin: 20px;
+}
+
+.icon-field {
+    display: none;
+    align-self: center;
 }
 
 .loader {
